@@ -7,6 +7,7 @@ import PlanetaryPanel from './components/PlanetaryPanel'
 import NumerologyPanel from './components/NumerologyPanel'
 import NewsPanel from './components/NewsPanel'
 import IndicatorsBar from './components/IndicatorsBar'
+import StarfieldBackground from './components/StarfieldBackground'
 import { fmt, signalBg } from './utils/format'
 
 type Tab = 'chart' | 'signal' | 'trade' | 'astro' | 'numerology' | 'news'
@@ -34,7 +35,11 @@ export default function App() {
   const signalColor = data?.signal.color || '#f59e0b'
 
   return (
-    <div className="min-h-screen bg-dark-900 text-gray-100 flex flex-col">
+    <div
+      className="min-h-screen bg-dark-900 text-gray-100 flex flex-col relative overflow-hidden"
+      style={{ '--signal-color': signalColor } as React.CSSProperties}
+    >
+      <StarfieldBackground />
 
       {/* Header */}
       <header className="border-b border-dark-600 bg-dark-800/80 backdrop-blur sticky top-0 z-50">
@@ -94,6 +99,7 @@ export default function App() {
             </div>
           )}
         </div>
+        <div className="aurora-bar" />
       </header>
 
       {/* Mobile tabs */}

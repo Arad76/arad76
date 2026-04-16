@@ -30,12 +30,37 @@ export default function PlanetaryPanel({ astro }: Props) {
       {/* Planet grid */}
       <div className="space-y-1.5">
         <div className="text-xs text-gray-500 uppercase tracking-wider">Planetary Positions</div>
-        <div className="grid grid-cols-1 gap-1">
-          {astro.planets.map(p => (
+        <div className="relative">
+          <svg style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', overflow: 'visible' }}>
+            {astro.aspects.slice(0, 5).map((a, i) => {
+              const ROW = 36
+              const idx1 = astro.planets.findIndex(p => p.name === a.planet1)
+              const idx2 = astro.planets.findIndex(p => p.name === a.planet2)
+              if (idx1 < 0 || idx2 < 0) return null
+              return (
+                <line
+                  key={i}
+                  className="constellation-line"
+                  x1={14} y1={idx1 * ROW + 18}
+                  x2={14} y2={idx2 * ROW + 18}
+                  stroke={a.bullish ? '#10b981' : '#ef4444'}
+                  strokeDasharray="3 4"
+                />
+              )
+            })}
+          </svg>
+          <div className="grid grid-cols-1 gap-1">
+          {astro.planets.map((p, idx) => (
             <div key={p.name}
               className="flex items-center gap-2 py-1.5 px-2 rounded bg-dark-700/50 hover:bg-dark-700 transition-colors"
             >
-              <span className="text-lg w-6 text-center">{p.symbol}</span>
+              <span
+                className="text-lg w-6 text-center planet-icon"
+                style={{
+                  '--planet-color': p.bullish ? '#10b981' : '#ef4444',
+                  '--planet-delay': `${idx * 0.4}s`,
+                } as React.CSSProperties}
+              >{p.symbol}</span>
               <span className="w-14 text-xs text-gray-300 font-medium">{p.name}</span>
               <span className="text-xs">{p.sign_symbol} {p.sign}</span>
               <span className="text-xs text-gray-500 ml-auto">{p.degree_in_sign.toFixed(1)}°</span>
@@ -52,6 +77,7 @@ export default function PlanetaryPanel({ astro }: Props) {
               </div>
             </div>
           ))}
+          </div>
         </div>
       </div>
 

@@ -6,11 +6,15 @@ interface Props {
   price: number
 }
 
+const SPARK_ANGLES = [0, 60, 120, 180, 240, 300]
+
 export default function SignalDisplay({ signal, price }: Props) {
   const pct = Math.abs(signal.composite_score)
   const barWidth = `${pct}%`
   const barColor = scoreColor(signal.composite_score)
   const isPositive = signal.composite_score >= 0
+  const isStrong = signal.signal === 'STRONG BUY' || signal.signal === 'STRONG SELL'
+  const sparkColor = signal.signal === 'STRONG BUY' ? '#34d399' : '#f87171'
 
   return (
     <div className="panel space-y-4">
@@ -18,8 +22,21 @@ export default function SignalDisplay({ signal, price }: Props) {
       <div className="flex items-center justify-between">
         <div>
           <div className="text-gray-400 text-xs uppercase tracking-widest mb-1">5-Min Signal</div>
-          <div className={`text-3xl font-black tracking-tight border px-4 py-2 rounded-lg ${signalBg(signal.signal)}`}>
-            {signal.signal}
+          <div className={isStrong ? 'sparkle-container' : ''}>
+            {isStrong && SPARK_ANGLES.map((angle, i) => (
+              <span
+                key={i}
+                className="sparkle-ray"
+                style={{
+                  '--angle':       `${angle}deg`,
+                  '--spark-delay': `${i * 0.26}s`,
+                  '--spark-color': sparkColor,
+                } as React.CSSProperties}
+              >✦</span>
+            ))}
+            <div className={`text-3xl font-black tracking-tight border px-4 py-2 rounded-lg ${signalBg(signal.signal)}`}>
+              {signal.signal}
+            </div>
           </div>
         </div>
         <div className="text-right">

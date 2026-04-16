@@ -28,17 +28,17 @@ export default function NumerologyPanel({ numerology }: Props) {
       <div className="grid grid-cols-3 gap-2">
         <div className="metric-card items-center text-center">
           <div className="metric-label">Moment #</div>
-          <div className="text-3xl font-black text-white">{numerology.moment_number}</div>
+          <div className="text-3xl font-black text-white num-float">{numerology.moment_number}</div>
           <div className="text-gray-600 text-xs">vibration</div>
         </div>
         <div className="metric-card items-center text-center">
           <div className="metric-label">Universal Day</div>
-          <div className="text-3xl font-black text-amber-400">{numerology.universal_day}</div>
+          <div className="text-3xl font-black text-amber-400 num-float" style={{ animationDelay: '1s' }}>{numerology.universal_day}</div>
           <div className="text-gray-600 text-xs">day number</div>
         </div>
         <div className="metric-card items-center text-center">
           <div className="metric-label">9-Year Cycle</div>
-          <div className="text-3xl font-black text-purple-400">{numerology.cycle_position}</div>
+          <div className="text-3xl font-black text-purple-400 num-float" style={{ animationDelay: '2s' }}>{numerology.cycle_position}</div>
           <div className="text-gray-600 text-xs">{CYCLE_LABELS[numerology.cycle_position] || ''}</div>
         </div>
       </div>
@@ -46,11 +46,17 @@ export default function NumerologyPanel({ numerology }: Props) {
       {/* Number breakdown */}
       <div className="space-y-1">
         <div className="text-xs text-gray-500 uppercase tracking-wider">Time Numerology</div>
-        {numerology.numbers.map(n => (
+        {numerology.numbers.map((n, index) => (
           <div key={n.label} className="flex items-center gap-2 py-1.5 px-2 rounded bg-dark-700/50">
             <div
-              className="w-7 h-7 rounded flex items-center justify-center text-sm font-black shrink-0"
-              style={{ backgroundColor: n.color + '30', color: n.color, border: `1px solid ${n.color}40` }}
+              className="w-7 h-7 rounded flex items-center justify-center text-sm font-black shrink-0 num-circle"
+              style={{
+                backgroundColor: n.color + '30',
+                color: n.color,
+                border: `1px solid ${n.color}60`,
+                '--num-color': n.color,
+                '--num-delay': `${index * 0.3}s`,
+              } as React.CSSProperties}
             >
               {n.number}
             </div>
