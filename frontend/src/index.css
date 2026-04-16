@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * { box-sizing: border-box; }
+  body { @apply bg-dark-900 text-gray-100 font-mono; overflow-x: hidden; }
+  ::-webkit-scrollbar { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-track { @apply bg-dark-800; }
+  ::-webkit-scrollbar-thumb { @apply bg-dark-500 rounded; }
+}
+
+@layer components {
+  .panel { @apply bg-dark-800 border border-dark-600 rounded-xl p-4; }
+  .panel-sm { @apply bg-dark-700 border border-dark-600 rounded-lg p-3; }
+
+  .signal-strong-buy  { @apply text-emerald-400; }
+  .signal-buy         { @apply text-green-400; }
+  .signal-neutral     { @apply text-yellow-400; }
+  .signal-sell        { @apply text-orange-400; }
+  .signal-strong-sell { @apply text-red-500; }
+
+  .badge-buy  { @apply bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded text-xs font-bold; }
+  .badge-sell { @apply bg-red-500/20 text-red-400 border border-red-500/30 px-2 py-0.5 rounded text-xs font-bold; }
+  .badge-neutral { @apply bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 px-2 py-0.5 rounded text-xs font-bold; }
+
+  .metric-card { @apply panel-sm flex flex-col gap-1; }
+  .metric-label { @apply text-gray-500 text-xs uppercase tracking-wider; }
+  .metric-value { @apply text-white font-bold text-lg; }
+  .metric-sub   { @apply text-gray-400 text-xs; }
+
+  .glow-green { box-shadow: 0 0 15px rgba(16, 185, 129, 0.4); }
+  .glow-red   { box-shadow: 0 0 15px rgba(239, 68, 68, 0.4); }
+  .glow-gold  { box-shadow: 0 0 15px rgba(245, 158, 11, 0.4); }
+}
+
+@layer utilities {
+  .text-oil { @apply text-amber-400; }
+  .animate-glow-pulse { animation: glowPulse 2s ease-in-out infinite; }
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.chart-container { background: transparent !important; }
